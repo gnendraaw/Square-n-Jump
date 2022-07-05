@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
 
     private Rigidbody2D rb;
+    private AudioManager audioManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     void Update()
@@ -31,13 +33,21 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Obstacle"))
         {
+            // play game over sfx
+            audioManager.playAudio("GameOver");
+
             ScoreManager.singleton.updateScore();
             RunManager.singleton.gameOver();
         }
 
         // increase score if player hit score collider
         else if (collision.CompareTag("Score"))
+        {
             ScoreManager.singleton.addScore();
+
+            // play scoring sfx
+            audioManager.playAudio("Score");
+        }
     }
 
     // return true if groundChecker hits ground layer
@@ -52,6 +62,9 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
             rb.velocity = Vector2.up * jumpForce;
+
+            // play jump sfx
+            audioManager.playAudio("Jump");
         }
     }
 }
