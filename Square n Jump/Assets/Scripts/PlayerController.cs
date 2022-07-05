@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
         jump();
     }
 
-    // draw gizmos for ground checking area
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(groundCheckPos.position, radius);
@@ -33,24 +32,17 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Obstacle"))
         {
-            // play game over sfx
             audioManager.playAudio("GameOver");
-
             ScoreManager.singleton.updateScore();
             RunManager.singleton.gameOver();
         }
-
-        // increase score if player hit score collider
         else if (collision.CompareTag("Score"))
         {
             ScoreManager.singleton.addScore();
-
-            // play scoring sfx
             audioManager.playAudio("Score");
         }
     }
 
-    // return true if groundChecker hits ground layer
     bool isGrounded()
     {
         return Physics2D.OverlapCircle(groundCheckPos.position, radius, whatIsGround);
@@ -58,12 +50,9 @@ public class PlayerController : MonoBehaviour
 
     void jump()
     {
-        // if player hits space button and char's on ground
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
             rb.velocity = Vector2.up * jumpForce;
-
-            // play jump sfx
             audioManager.playAudio("Jump");
         }
     }
