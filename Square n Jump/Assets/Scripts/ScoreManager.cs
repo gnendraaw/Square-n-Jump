@@ -39,8 +39,12 @@ public class ScoreManager : MonoBehaviour
     void increaseObsSpeed()
     {
         float currentSpeed = RunManager.singleton.obsSpeed;
-        if(currentSpeed % 5 == 0 && currentSpeed < 13)
+        if(score % 5 == 0 && currentSpeed < 11)
+        {
             RunManager.singleton.obsSpeed += 2f;
+            RunManager.singleton.minDelay -= .2f;
+            RunManager.singleton.maxDelay -= .2f;
+        }
     }
 
     public void updateScore()
