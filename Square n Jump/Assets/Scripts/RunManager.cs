@@ -22,6 +22,7 @@ public class RunManager : MonoBehaviour
 
     public GameObject obsGO;
     public GameObject gameOverUI;
+    public GameObject pauseUI;
 
     public Transform obsPos;
     public Transform endPos;
@@ -36,6 +37,7 @@ public class RunManager : MonoBehaviour
 
     private void Update()
     {
+        togglePauseMenu();
         gameOverActions();
     }
 
@@ -51,6 +53,31 @@ public class RunManager : MonoBehaviour
     {
         Instantiate(playerPrefabs[playerIndex], playerPos.position, Quaternion.identity);
         runState = RunState.RUNNING;
+    }
+
+    void togglePauseMenu()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (runState == RunState.RUNNING)
+                enablePauseMenu();
+            else
+                disablePauseMenu();
+        }
+    }    
+
+    void enablePauseMenu()
+    {
+        runState = RunState.PAUSE;
+        pauseUI.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    void disablePauseMenu()
+    {
+        runState = RunState.RUNNING;
+        pauseUI.SetActive(false);
+        Time.timeScale = 1;
     }
 
     void gameOverActions()
