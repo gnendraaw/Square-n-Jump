@@ -11,11 +11,6 @@ public class GameManager : MonoBehaviour
         singleton = this;
     }
 
-    public void setSelectedChar()
-    {
-
-    }
-
     public int getSelectedChar()
     {
         return PlayerPrefs.GetInt("SelectedChar");

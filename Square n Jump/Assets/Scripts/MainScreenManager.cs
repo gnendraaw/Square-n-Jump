@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum MainScreenState { MAIN, SELECTCHAR }
 
@@ -9,6 +9,7 @@ public class MainScreenManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainScreenPanel;
     [SerializeField] private GameObject charSelectPanel;
+    [SerializeField] private bool isCharSelected = false;
 
     public MainScreenState mainScreenState;
 
@@ -52,5 +53,18 @@ public class MainScreenManager : MonoBehaviour
             charSelectPanel.SetActive(true);
             mainScreenPanel.SetActive(false);
         }
+    }
+
+    public void startRun()
+    {
+        // load run scene
+        if(isCharSelected)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void selectChar(int index)
+    {
+        isCharSelected = true;
+        PlayerPrefs.SetInt("SelectedChar", index);
     }
 }

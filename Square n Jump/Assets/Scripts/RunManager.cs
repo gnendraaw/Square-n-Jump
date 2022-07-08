@@ -16,6 +16,10 @@ public class RunManager : MonoBehaviour
     public float minDelay;
     public float maxDelay;
 
+    public GameObject[] playerPrefabs;
+    public Transform playerPos;
+    private int playerIndex;
+
     public GameObject obsGO;
     public GameObject gameOverUI;
 
@@ -25,15 +29,28 @@ public class RunManager : MonoBehaviour
     private void Start()
     {
         singleton = this;
+        setupScene();
 
-        runState = RunState.START;
-        runState = RunState.RUNNING;
         StartCoroutine(spawnObs());
     }
 
     private void Update()
     {
         gameOverActions();
+    }
+
+    void setupScene()
+    {
+        runState = RunState.START;
+        playerIndex = GameManager.singleton.getSelectedChar();
+
+        spawnPlayer();
+    }
+
+    void spawnPlayer()
+    {
+        Instantiate(playerPrefabs[playerIndex], playerPos.position, Quaternion.identity);
+        runState = RunState.RUNNING;
     }
 
     void gameOverActions()
