@@ -34,13 +34,11 @@ public class PlayerController : MonoBehaviour
         {
             audioManager.playAudio("GameOver");
             ScoreManager.singleton.updateScore();
-            GameManager.singleton.savePlayerPoint();
             RunManager.singleton.gameOver();
         }
         else if (collision.CompareTag("Score"))
         {
             ScoreManager.singleton.addScore();
-            GameManager.singleton.addPoint();
             audioManager.playAudio("Score");
         }
     }
